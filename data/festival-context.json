@@ -1,0 +1,51 @@
+{
+  "festival": "Horizonte 2026",
+  "disclaimer": "Datos completamente sintéticos para demostración de hackathon.",
+  "mapa": {
+    "ESCENARIO_NORTE": "Zona N · salida E-2 · salida alternativa E-3 · puesto médico PM-1 a 80 m · punto de agua B-2 a 110 m",
+    "ESCENARIO_SUR": "Zona S · pantallas P-3 y P-4 · coordinación de Producción",
+    "ACCESO_OESTE": "Perímetro W-1 · acceso de público y salida alternativa W-2"
+  },
+  "protocolos": [
+    {
+      "id": "P-SEG-03",
+      "nombre": "Bienestar y seguridad",
+      "disparadores": ["persona desorientada", "persona herida", "posible riesgo personal"],
+      "decision": "ESCALAR_A_SEGURIDAD",
+      "publicacion": "NO_PUBLICAR",
+      "accion": "Avisar a coordinación de seguridad y asistencia médica. Solicitar verificación presencial."
+    },
+    {
+      "id": "P-OPS-07",
+      "nombre": "Infraestructura",
+      "disparadores": ["valla floja", "estructura inestable", "acceso bloqueado"],
+      "decision": "ESCALAR_A_OPERACIONES",
+      "publicacion": "NO_PUBLICAR",
+      "accion": "Avisar a Operaciones y Seguridad. Aislar el sector hasta verificación presencial."
+    },
+    {
+      "id": "P-COM-01",
+      "nombre": "Comunicación operativa confirmada",
+      "disparadores": ["cambio de horario confirmado", "demora confirmada", "producción confirma"],
+      "decision": "COMUNICAR_AL_PUBLICO",
+      "publicacion": "BORRADOR_PARA_APROBACION",
+      "accion": "Preparar aviso breve sólo con información confirmada por Producción."
+    },
+    {
+      "id": "P-COM-04",
+      "nombre": "Información no confirmada",
+      "disparadores": ["rumor", "comentario sin fuente", "cancelación no confirmada"],
+      "decision": "NO_PUBLICAR_Y_MONITOREAR",
+      "publicacion": "NO_PUBLICAR",
+      "accion": "No amplificar. Pedir confirmación a Producción y mantener monitoreo."
+    },
+    {
+      "id": "P-OPS-09",
+      "nombre": "Desvíos y abastecimiento",
+      "disparadores": ["salida cerrada", "agua agotada", "sector concurrido"],
+      "decision": "ESCALAR_Y_COMUNICAR",
+      "publicacion": "BORRADOR_PARA_APROBACION",
+      "accion": "Avisar a Operaciones y Logística. Indicar salida alternativa E-3 y punto de agua B-2 sólo tras aprobación humana."
+    }
+  ]
+}

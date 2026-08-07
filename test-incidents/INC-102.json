@@ -1,0 +1,7 @@
+{
+  "incidencia_id": "INC-102",
+  "titulo": "Rumor de cancelación del show principal",
+  "detalle": "Monitoreo detecta varios comentarios de público que afirman que se canceló el show principal. Producción no confirmó ninguna cancelación.",
+  "origen": "monitoreo de comentarios",
+  "zona": "ESCENARIO_SUR"
+}
