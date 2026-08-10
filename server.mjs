@@ -22,4 +22,4 @@ http.createServer(async (req, res) => {
     if (!target.startsWith(root)) return send(res, 403, 'Prohibido', 'text/plain');
     return send(res, 200, await readFile(target), types[path.extname(target)] || 'application/octet-stream');
   } catch (error) { return send(res, 500, JSON.stringify({error:'FARO no pudo procesar la incidencia', detail:error.message})); }
-}).listen(4173, '127.0.0.1', () => console.log('FARO: http://127.0.0.1:4173'));
+}).listen(4173, '0.0.0.0', () => console.log('FARO: http://0.0.0.0:4173'));
