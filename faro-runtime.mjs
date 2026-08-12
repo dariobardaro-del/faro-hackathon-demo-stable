@@ -18,7 +18,12 @@ export async function processIncident(incident) {
     'agent', '--agent', 'main', '--session-key', `agent:main:faro-${incident.incidencia_id}`,
     '--model', 'openai/gpt-5.6-terra', '--thinking', 'medium', '--message', prompt, '--json'
   ], { cwd: new URL('.', import.meta.url).pathname, timeout: 120000, maxBuffer: 1024 * 1024 });
-  const outer = JSON.parse(stdout.slice(stdout.indexOf('{')));
+  const start = stdout.indexOf('{');
+  if (start < 0) throw new Error('OpenClaw no devolvió una salida JSON verificable');
+  const outer = JSON.parse(stdout.slice(start));
   const text = outer.result.payloads?.[0]?.text;
-  return JSON.parse(text);
+  if (!text) throw new Error('OpenClaw devolvió una respuesta vacía');
+  const result = JSON.parse(text);
+  if (result.incidencia_id !== incident.incidencia_id || result.requiere_aprobacion_humana !== true) throw new Error('La respuesta del agente no pasó la validación de identidad y aprobación humana');
+  return result;
 }
