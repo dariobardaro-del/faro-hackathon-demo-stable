@@ -10,7 +10,11 @@ const send = (res, status, body, type='application/json; charset=utf-8') => { re
 
 http.createServer(async (req, res) => {
   try {
-    if (req.method === 'POST' && req.url === '/api/incidents') {
+    // Parse the URL before routing so cache-busting query parameters such as
+    // `/?v=2` never become part of a filesystem path.
+    const requestUrl = new URL(req.url || '/', 'http://localhost');
+    const pathname = requestUrl.pathname;
+    if (req.method === 'POST' && pathname === '/api/incidents') {
       let raw=''; for await (const chunk of req) raw += chunk;
       const input = JSON.parse(raw);
       if (!input.titulo || !input.detalle || !input.zona) return send(res, 400, JSON.stringify({error:'Faltan datos de la incidencia'}));
@@ -18,8 +22,8 @@ http.createServer(async (req, res) => {
       const incident = { incidencia_id:/^INC-10[123]$/.test(requestedId) ? requestedId : `INC-LIVE-${Date.now().toString().slice(-5)}`, titulo:String(input.titulo).slice(0,160), detalle:String(input.detalle).slice(0,600), origen:'simulador de demo', zona:String(input.zona).slice(0,60) };
       return send(res, 200, JSON.stringify(await processIncident(incident)));
     }
-    const pathname = req.url === '/' ? '/index.html' : req.url;
-    const target = path.resolve(root, '.' + pathname);
+    const filePath = pathname === '/' ? '/index.html' : pathname;
+    const target = path.resolve(root, '.' + filePath);
     if (!target.startsWith(root)) return send(res, 403, 'Prohibido', 'text/plain');
     return send(res, 200, await readFile(target), types[path.extname(target)] || 'application/octet-stream');
   } catch (error) { return send(res, 500, JSON.stringify({error:'FARO no pudo procesar la incidencia', detail:error.message})); }
