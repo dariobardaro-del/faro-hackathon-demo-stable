@@ -14,7 +14,8 @@ http.createServer(async (req, res) => {
       let raw=''; for await (const chunk of req) raw += chunk;
       const input = JSON.parse(raw);
       if (!input.titulo || !input.detalle || !input.zona) return send(res, 400, JSON.stringify({error:'Faltan datos de la incidencia'}));
-      const incident = { incidencia_id:`INC-LIVE-${Date.now().toString().slice(-5)}`, titulo:String(input.titulo).slice(0,160), detalle:String(input.detalle).slice(0,600), origen:'simulador de demo', zona:String(input.zona).slice(0,60) };
+      const requestedId = String(input.incidencia_id || '');
+      const incident = { incidencia_id:/^INC-10[123]$/.test(requestedId) ? requestedId : `INC-LIVE-${Date.now().toString().slice(-5)}`, titulo:String(input.titulo).slice(0,160), detalle:String(input.detalle).slice(0,600), origen:'simulador de demo', zona:String(input.zona).slice(0,60) };
       return send(res, 200, JSON.stringify(await processIncident(incident)));
     }
     const pathname = req.url === '/' ? '/index.html' : req.url;
