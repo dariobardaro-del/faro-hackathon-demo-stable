@@ -6,7 +6,7 @@ import { processIncident } from './faro-runtime.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8' };
-const send = (res, status, body, type='application/json; charset=utf-8') => { res.writeHead(status, {'Content-Type':type}); res.end(body); };
+const send = (res, status, body, type='application/json; charset=utf-8') => { res.writeHead(status, {'Content-Type':type, 'Cache-Control':'no-store, no-cache, must-revalidate'}); res.end(body); };
 
 http.createServer(async (req, res) => {
   try {

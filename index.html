@@ -31,7 +31,6 @@
     @media(max-width:700px){.cinema-bar{padding-left:18px;padding-right:18px}.activity-feed{padding-left:18px;padding-right:18px}.live-signal{font-size:10px}.replay{padding:8px}.map-preview{height:200px}.decision-telemetry{margin-left:18px;margin-right:18px;grid-template-columns:1fr}.decision-telemetry div{display:flex;justify-content:space-between;gap:10px}.decision-telemetry span{margin:0}}
     .approval-details{display:grid;gap:8px;margin:14px 0;padding:11px 0;border-top:1px solid oklch(.62 .12 82/.22);border-bottom:1px solid oklch(.62 .12 82/.22)}.approval-details div{display:grid;grid-template-columns:105px 1fr;gap:8px;align-items:start}.approval-details span{font:9px 'DM Mono';letter-spacing:.06em;color:var(--amber)}.approval-details strong{font-size:11px;line-height:1.35;color:var(--text)}
     .outcome-card{position:relative;overflow:hidden;margin:0 24px 20px;padding:14px 16px;border:1px solid oklch(.60 .13 143/.62);border-radius:11px;background:linear-gradient(105deg,oklch(.34 .09 143/.24),oklch(.20 .04 205/.16));box-shadow:inset 0 0 24px oklch(.82 .15 143/.05),0 0 22px oklch(.75 .14 143/.08);animation:outcomeIn .45s ease-out both}.outcome-card:after{content:'';position:absolute;inset:0;width:38%;background:linear-gradient(90deg,transparent,oklch(.9 .12 143/.20),transparent);transform:translateX(-150%);animation:outcomeSweep 2.8s ease-in-out .35s infinite}.outcome-card>*{position:relative;z-index:1}.outcome-kicker{font:10px 'DM Mono';letter-spacing:.1em;color:var(--lime);text-transform:uppercase}.outcome-title{font-size:16px;font-weight:700;margin:5px 0 4px}.outcome-detail{font-size:12px;color:var(--muted);line-height:1.45}.outcome-detail strong{color:var(--text)}.outcome-pulse{display:inline-block;width:7px;height:7px;margin-right:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px oklch(.75 .14 143/.12),0 0 14px var(--lime);animation:pulse 1.5s infinite}@keyframes outcomeIn{from{opacity:0;transform:translateY(-6px);filter:brightness(1.5)}to{opacity:1;transform:none;filter:none}}@keyframes outcomeSweep{0%,18%{transform:translateX(-150%)}55%,100%{transform:translateX(320%)}}
-  <style>
     .empty-decision{display:flex !important;flex-direction:column !important;align-items:flex-start !important;gap:12px !important;width:calc(100% - 48px);min-height:118px;box-sizing:border-box;margin:22px 24px;padding:22px 24px;border:1px solid oklch(.48 .07 205/.6);border-radius:12px;background:linear-gradient(145deg,oklch(.25 .04 205/.22),oklch(.15 .025 252/.72));box-shadow:inset 0 0 24px oklch(.65 .10 205/.04),0 8px 24px oklch(.06 .03 252/.16)}
     .empty-decision strong{display:block !important;margin:0 !important;font-size:17px;line-height:1.25;color:var(--text);letter-spacing:-.02em}
     .empty-decision span{display:block !important;margin:0 !important;max-width:62ch;line-height:1.55;color:var(--muted);font-size:13px;white-space:normal}
@@ -41,7 +40,6 @@
     /* Bitácora legible: permite ver toda la trazabilidad sin un panel diminuto. */
     .activity-feed{max-height:360px;min-height:180px}
     @media(max-width:1050px){.activity-feed{max-height:300px}}
-  </style>
 </head>
 <body>
   <main class="shell">
