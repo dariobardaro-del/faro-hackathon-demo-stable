@@ -38,6 +38,9 @@
     .right .empty-decision{margin:0;padding:20px;border-color:oklch(.50 .08 205/.45);background:linear-gradient(145deg,oklch(.27 .05 205/.18),oklch(.16 .025 252/.82))}
     .right .empty-decision strong{font:12px 'DM Mono';letter-spacing:.06em;text-transform:uppercase;color:var(--cyan)}
     .right .empty-decision span{font-size:13px;margin-top:12px}
+    /* Bitácora legible: permite ver toda la trazabilidad sin un panel diminuto. */
+    .activity-feed{max-height:360px;min-height:180px}
+    @media(max-width:1050px){.activity-feed{max-height:300px}}
   </style>
 </head>
 <body>
@@ -92,6 +95,13 @@
         add('RESPUESTA RECIBIDA','OpenClaw devolvió una salida estructurada');add('CONTEXTO UTILIZADO',(x.contexto_consultado||[]).join(' · '));add('DECISIÓN GENERADA',(x.decision_recomendada||'').replaceAll('_',' '));add('PROPUESTA PENDIENTE',x.accion_propuesta||'Revisión humana requerida');
         Object.assign(c,{detail:'Ejecución real · respuesta recibida desde OpenClaw',level:x.clasificacion||c.level,decision:(x.decision_recomendada||c.decision).replaceAll('_',' '),protocol:x.contexto_consultado?.at(-1)||c.protocol,zone:x.contexto_consultado?.[0]||c.zone,action:x.accion_propuesta||c.action,publish:(x.publicacion||c.publish).replaceAll('_',' '),trace:x.traza||c.trace});render();const persisted=document.getElementById('activityFeed');if(persisted)persisted.innerHTML=activityLog.map(y=>`<div class="activity-row"><span class="activity-time">${y.now}</span><span class="activity-state">${y.state}</span><span><strong>${esc(y.label)}</strong><small>${esc(y.detail)}</small></span></div>`).join('');const b=document.getElementById('replayCase');if(b){b.disabled=false;b.textContent='↻ Ejecutar nuevamente con OpenClaw'}
       }catch(err){add('EJECUCIÓN FALLIDA',err.message,'ERROR');add('SIMULACIÓN BLOQUEADA','No se utilizó una respuesta local','BLOQUEADO');button.disabled=false;button.textContent='↻ Reintentar ejecución real'}
+    };
+    /* La respuesta ya fue validada por OpenClaw; este puente habilita la decisión humana. */
+    const executeRealValidated = executeReal;
+    executeReal = async function(){
+      await executeRealValidated();
+      const c=cases[selected];
+      if(c && activityLog.some(x=>x.label==='RESPUESTA RECIBIDA')){ executed[c.id]=true; render(); }
     };
     function startReplay(){
       const c=cases[selected],feed=document.getElementById('activityFeed'),button=document.getElementById('replayCase'),stage=document.getElementById('replayStage');
