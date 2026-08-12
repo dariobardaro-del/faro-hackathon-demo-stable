@@ -11,7 +11,10 @@ export async function processIncident(incident) {
     readFile(new URL('./data/festival-context.json', here), 'utf8')
   ]);
   const prompt = `${instructions}\n\nCONTEXTO SINTÉTICO:\n${context}\n\nINCIDENCIA A PROCESAR:\n${JSON.stringify(incident)}`;
-  const { stdout } = await execFileAsync('openclaw', [
+  // OpenClaw runs in the Hostinger Docker container, not on the VPS host.
+  // Keeping the container name configurable also makes local verification easy.
+  const container = process.env.OPENCLAW_CONTAINER || 'openclaw-1ng3-openclaw-1';
+  const { stdout } = await execFileAsync('docker', ['exec', container, 'openclaw',
     'agent', '--agent', 'main', '--session-key', `agent:main:faro-${incident.incidencia_id}`,
     '--model', 'openai/gpt-5.6-terra', '--thinking', 'medium', '--message', prompt, '--json'
   ], { cwd: new URL('.', import.meta.url).pathname, timeout: 120000, maxBuffer: 1024 * 1024 });
